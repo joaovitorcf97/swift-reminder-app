@@ -38,21 +38,29 @@ extension ReminderFlowController: SplashFlowDelegate {
         
         func navigateToHome() {
             self.navigationController?.dismiss(animated: true)
-            let viewController = UIViewController()
-            viewController.view.backgroundColor = .white
+            let viewController = viewControllerFactory.makeHomeViewController(flowDelegate: self)
             self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
-    
-    
 }
 
 // MARK: Login
 extension ReminderFlowController: LoginBottomSheetFlowDelegate {
     func navigateToHome() {
         self.navigationController?.dismiss(animated: true)
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .white
+        let viewController = viewControllerFactory.makeHomeViewController(flowDelegate: self)
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+// MARK: Home
+extension ReminderFlowController: HomeFlowDelegate {
+    func navigateToRecepes() {
+        //
+    }
+    
+    func logout() {
+        self.navigationController?.popViewController(animated: true)
+        self.openLoginBottomSheet()
     }
 }
