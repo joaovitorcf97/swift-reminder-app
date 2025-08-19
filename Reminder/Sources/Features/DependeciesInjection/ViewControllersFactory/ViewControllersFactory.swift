@@ -26,4 +26,10 @@ final class ViewControllersFactory: ViewControllerFactoryProtocol {
         let viewController = HomeViewController(contentView: contentView, flowDelegate: flowDelegate, viewModel: viewModel)
         return viewController
     }
+    
+    func makeRecipesViewController() -> NewReceiptViewController {
+        let contentView = NewReceiptView()
+        let viewController = NewReceiptViewController(contentView: contentView)
+        return viewController
+    }
 }

@@ -27,6 +27,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupActionForNewRecipe()
         setupNavigationBar()
         checkForExistingData()
     }
@@ -55,6 +56,12 @@ class HomeViewController: UIViewController {
         setupContentToBounds(contentView: contentView)
     }
     
+    private func setupActionForNewRecipe() {
+        contentView.newRecipeButton.tapAction = { [weak self] in
+            self?.didTapNewRecipe()
+        }
+    }
+    
     @objc
     private func logoutAction() {
         UserDefaultsManager.removeUser()
@@ -75,6 +82,10 @@ class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewDelegate {
     func didTapProfileImage() {
         selectProfileImage()
+    }
+    
+    func didTapNewRecipe() {
+        delegate.navigateToRecepes()
     }
 }
 

@@ -10,11 +10,10 @@ import UIKit
 
 class NewReceiptViewController: UIViewController {
     let contentView: NewReceiptView
-    let delegate: NewReceiptFlowDelegate
+    // let delegate: NewReceiptFlowDelegate
     
-    init(contentView: NewReceiptView, delegate: NewReceiptFlowDelegate) {
+    init(contentView: NewReceiptView) {
         self.contentView = contentView
-        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,10 +33,6 @@ class NewReceiptViewController: UIViewController {
         setupConstraints()
     }
     
-    private func setupActions() {
-        
-    }
-    
     private func setupConstraints() {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -46,5 +41,13 @@ class NewReceiptViewController: UIViewController {
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func setupActions() {
+        contentView.backButton.addTarget(self, action: #selector(backbuttonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func backbuttonTapped() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
