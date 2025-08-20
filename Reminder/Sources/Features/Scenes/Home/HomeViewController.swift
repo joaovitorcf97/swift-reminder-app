@@ -28,7 +28,6 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setup()
         setupActionForNewRecipe()
-        setupActionForMyReceipts()
         setupNavigationBar()
         checkForExistingData()
     }
@@ -61,9 +60,7 @@ class HomeViewController: UIViewController {
         contentView.newRecipeButton.tapAction = { [weak self] in
             self?.didTapNewRecipe()
         }
-    }
-    
-    private func setupActionForMyReceipts() {
+        
         contentView.myPrescriptionButton.tapAction = { [weak self] in
             self?.didTapMyReceipts()
         }

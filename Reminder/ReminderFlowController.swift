@@ -62,13 +62,20 @@ extension ReminderFlowController: HomeFlowDelegate {
     }
     
     func navigateToMyReceipts() {
-        let myReceiptsController = viewControllerFactory.makeMyReceiptsViewController()
+        let myReceiptsController = viewControllerFactory.makeMyReceiptsViewController(flowDelegate: self)
         self.navigationController?.pushViewController(myReceiptsController, animated: true)
-        
     }
     
     func logout() {
         self.navigationController?.popViewController(animated: true)
         self.openLoginBottomSheet()
+    }
+}
+
+
+// MARK: MyReceipts
+extension ReminderFlowController: MyReceiptsFlowDelegate {
+    func goToNewReceipts() {
+        
     }
 }
