@@ -11,6 +11,8 @@ import UIKit
 class RemedyCell: UITableViewCell {
     static let identifier = "RemedyCell"
     
+    var onDelete: (() -> Void)?
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = Typography.subHeading
@@ -67,6 +69,7 @@ class RemedyCell: UITableViewCell {
         let button = UIButton()
         let imageView = UIImage(named: "trash")
         button.setImage(imageView, for: .normal)
+        button.addTarget(self, action: #selector(trashButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -143,5 +146,10 @@ class RemedyCell: UITableViewCell {
         titleLabel.text = title
         timeLabel.text = time
         recurrenceLabel.text = recurrence
+    }
+    
+    @objc
+    private func trashButtonTapped() {
+        onDelete?()
     }
 }

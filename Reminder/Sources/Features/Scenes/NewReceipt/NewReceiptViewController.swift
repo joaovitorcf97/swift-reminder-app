@@ -7,11 +7,20 @@
 
 import Foundation
 import UIKit
+import Lottie
 
 class NewReceiptViewController: UIViewController {
     let contentView: NewReceiptView
-    // let delegate: NewReceiptFlowDelegate
     let viewModel: NewReceiptViewModel
+    
+    private let successAnimationView: LottieAnimationView = {
+        let animationView = LottieAnimationView(name: "success")
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .playOnce
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.isHidden = true
+        return animationView
+    }()
     
     init(contentView: NewReceiptView, viewModel: NewReceiptViewModel) {
         self.contentView = contentView
@@ -32,6 +41,7 @@ class NewReceiptViewController: UIViewController {
     private func setupView() {
         view.backgroundColor = Colors.gray800
         view.addSubview(contentView)
+        view.addSubview(successAnimationView)
         setupConstraints()
     }
     
@@ -42,6 +52,11 @@ class NewReceiptViewController: UIViewController {
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            successAnimationView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            successAnimationView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            successAnimationView.heightAnchor.constraint(equalTo: 120.0),
+//            successAnimationView.widthAnchor.constraint(equalTo: 120.0),
         ])
     }
     
@@ -58,11 +73,29 @@ class NewReceiptViewController: UIViewController {
         let takeNow = false
         
         viewModel.addReceipt(remedy: remedy, time: time, recurrence: recurrence, takeNow: takeNow)
+        playSuccessAnimation()
         print("Receita \(remedy) criada")
     }
     
     @objc
     private func backbuttonTapped() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func playSuccessAnimation() {
+        successAnimationView.isHidden = false
+        successAnimationView.play { [weak self] finished in
+            if (finished) {
+                self?.successAnimationView.isHidden = true
+                self?.clearFieldsAndResetButton()
+            }
+        }
+    }
+    
+    private func clearFieldsAndResetButton() {
+        contentView.remedyInput.textField.text = ""
+        contentView.timeInput.textField.text = ""
+        contentView.timeInput.textField.text = ""
+        contentView.addButton.isEnabled = false
     }
 }
